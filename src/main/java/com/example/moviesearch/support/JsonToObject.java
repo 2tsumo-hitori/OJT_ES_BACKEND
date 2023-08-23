@@ -1,35 +1,35 @@
 package com.example.moviesearch.support;
 
-import com.example.moviesearch.dto.MovieSearchResponse;
-import com.example.moviesearch.entity.Movie;
+import com.example.moviesearch.dto.TargetResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class JsonToObject {
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static MovieSearchResponse objectBuilder(SearchResponse searchResponse) throws JsonProcessingException {
-        SearchHit[] hits = searchResponse.getHits().getHits();
+    public static <T> TargetResponse<T> objectBuilder(final SearchResponse searchResponse, final Class<T> targetType) {
+        val hits = searchResponse.getHits().getHits();
 
-        MovieSearchResponse movieSearchResponse = new MovieSearchResponse();
+        val items = new ArrayList<T>();
 
-        List<Movie> movies = new ArrayList<>();
+        Arrays.stream(hits).forEach(hit -> {
+            try {
+                items.add(objectMapper.readValue(hit.getSourceAsString(), targetType));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        for (SearchHit hit : hits) {
-            Movie movie = objectMapper.readValue(hit.getSourceAsString(), Movie.class);
-
-            movies.add(movie);
-        }
-
-        movieSearchResponse.setMovies(movies);
-
-        return movieSearchResponse;
+        return new TargetResponse<>(items);
     }
 }

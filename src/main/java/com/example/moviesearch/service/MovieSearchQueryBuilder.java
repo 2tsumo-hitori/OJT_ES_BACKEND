@@ -13,7 +13,7 @@ import java.io.IOException;
 public class MovieSearchQueryBuilder {
     private final QuerySourceBuilder querySourceBuilder;
 
-    public SearchResponse getAutoCompleteByChosung(String chosung) throws IOException {
+    public SearchResponse getAutoCompleteByChosung(final String chosung) throws IOException {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
         boolQueryBuilder
