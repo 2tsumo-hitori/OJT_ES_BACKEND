@@ -16,8 +16,6 @@ class MovieSearchServiceTest {
 
     @Test
     void name() throws IOException {
-        var response = movieSearchService.searchByChosung("ㅁㄴㅌ", Movie.class);
-
-        System.out.println(response);
+        var response = movieSearchService.searchByChosung("ㅇㄶㅅㅇ", Movie.class);
     }
 }

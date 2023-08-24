@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.search.SearchHit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JsonToObject {

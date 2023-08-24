@@ -12,19 +12,20 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.example.moviesearch.support.Index.MY_MOVIE_SEARCH;
+import static com.example.moviesearch.support.Index.*;
 
 @Component
 @RequiredArgsConstructor
 public class QuerySourceBuilder {
+
     private final RestHighLevelClient esClient;
 
-    public SearchResponse build(BoolQueryBuilder boolQueryBuilder) throws IOException {
+    public SearchResponse build(final BoolQueryBuilder boolQueryBuilder) throws IOException {
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource().query(boolQueryBuilder);
 
         searchSourceBuilder
-                .sort("movieNmCount", SortOrder.ASC)
-                .fetchSource("movieNm", null);
+                .sort(MOVIE_NM_COUNT, SortOrder.ASC)
+                .fetchSource(MOVIE_NM, null);
 
         SearchRequest searchRequest = new SearchRequest(MY_MOVIE_SEARCH);
 

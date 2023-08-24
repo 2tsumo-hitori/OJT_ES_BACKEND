@@ -1,5 +1,6 @@
 package com.example.moviesearch.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,9 +8,12 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
+
 @Getter
 @Setter
 @ToString
+@JsonInclude(NON_EMPTY)
 public class Movie {
 
     private String repNationNm;
@@ -22,7 +26,7 @@ public class Movie {
 
     private String movieNm;
 
-    private int prdtYear;
+    private Integer prdtYear;
 
     private String typeNm;
 
